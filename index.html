@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Expense Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js dari CDN untuk membuat grafik -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-icon">💰</span>
+        <div>
+          <h1 class="header-title">Smart Expense Analyzer</h1>
+          <p class="header-subtitle">Catat & analisis pengeluaran harianmu</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== KONTEN UTAMA ===== -->
+  <main class="container">
+
+    <!-- Kartu Ringkasan -->
+    <section class="summary-grid">
+      <div class="card summary-card">
+        <p class="card-label">Total Pengeluaran</p>
+        <p class="card-value" id="totalExpense">Rp 0</p>
+      </div>
+      <div class="card summary-card">
+        <p class="card-label">Kategori Terbanyak</p>
+        <p class="card-value" id="topCategory">—</p>
+      </div>
+      <div class="card summary-card">
+        <p class="card-label">Rata-rata per Hari</p>
+        <p class="card-value" id="dailyAverage">Rp 0</p>
+      </div>
+      <div class="card summary-card">
+        <p class="card-label">Jumlah Transaksi</p>
+        <p class="card-value" id="totalTransactions">0</p>
+      </div>
+    </section>
+
+    <!-- Baris Formulir + Grafik -->
+    <section class="main-grid">
+
+      <!-- Formulir Tambah Pengeluaran -->
+      <div class="card form-card">
+        <h2 class="section-title">Tambah Pengeluaran</h2>
+        <form id="expenseForm" novalidate>
+
+          <div class="form-group">
+            <label for="expenseName">Nama Pengeluaran</label>
+            <input type="text" id="expenseName" placeholder="Contoh: Makan siang" maxlength="60" />
+            <span class="error-msg" id="nameError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="expenseCategory">Kategori</label>
+            <select id="expenseCategory">
+              <option value="">-- Pilih Kategori --</option>
+              <option value="Makanan">Makanan</option>
+              <option value="Transportasi">Transportasi</option>
+              <option value="Pendidikan">Pendidikan</option>
+              <option value="Hiburan">Hiburan</option>
+              <option value="Kesehatan">Kesehatan</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+            <span class="error-msg" id="categoryError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="expenseAmount">Jumlah (Rp)</label>
+            <input type="number" id="expenseAmount" placeholder="Contoh: 15000" min="1" />
+            <span class="error-msg" id="amountError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="expenseDate">Tanggal</label>
+            <input type="date" id="expenseDate" />
+            <span class="error-msg" id="dateError"></span>
+          </div>
+
+          <button type="submit" class="btn-primary">+ Tambah Pengeluaran</button>
+        </form>
+      </div>
+
+      <!-- Grafik Donat per Kategori -->
+      <div class="card chart-card">
+        <h2 class="section-title">Pengeluaran per Kategori</h2>
+        <div class="chart-wrapper">
+          <canvas id="expenseChart"></canvas>
+        </div>
+        <p class="chart-empty" id="chartEmpty" style="display:none;">
+          Belum ada data untuk ditampilkan.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- Saran Penghematan -->
+    <section class="card suggestions-card" id="suggestionsSection">
+      <h2 class="section-title">💡 Saran Penghematan</h2>
+      <ul class="suggestions-list" id="suggestionsList"></ul>
+    </section>
+
+    <!-- Tabel Transaksi -->
+    <section class="card table-card">
+      <h2 class="section-title">Riwayat Transaksi</h2>
+      <div class="table-wrapper">
+        <table class="expense-table" id="expenseTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Kategori</th>
+              <th>Jumlah</th>
+              <th>Tanggal</th>
+              <th>Hapus</th>
+            </tr>
+          </thead>
+          <tbody id="expenseTableBody">
+            <!-- Diisi oleh JavaScript -->
+          </tbody>
+        </table>
+        <p class="table-empty" id="tableEmpty" style="display:none;">
+          Belum ada transaksi. Tambahkan pengeluaran pertamamu!
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Smart Expense Analyzer &mdash; Proyek Akhir Mahasiswa</p>
+  </footer>
+
+  <!-- File JavaScript aplikasi -->
+  <script src="app.js"></script>
+
+</body>
+</html>
